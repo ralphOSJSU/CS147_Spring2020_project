@@ -39,7 +39,8 @@ public class Network {
         return null;
     }
 
-    public ArrayList<ArrayList<User>> adjecencyList(){			// Creates an adjacency list for the network using the users and their friends.
+ // Creates an adjacency list for the network using the users and their friends.
+    public ArrayList<ArrayList<User>> adjecencyList(){			
         ArrayList<ArrayList<User>> list = new ArrayList<>();
         for(User user : users) {
             list.add(user.getFriends());

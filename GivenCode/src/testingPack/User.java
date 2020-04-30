@@ -1,9 +1,9 @@
+package testingPack;
 
-package SocialNetwork;
 import java.util.ArrayList;
 import java.util.Objects;
 
-	/*
+/*
  * Class that handles users and their details.
  */
 
@@ -11,13 +11,12 @@ public class User {
     private String name;
     private Status status;
     private String imageLoc;
-    private ArrayList<User> friends;
+    ArrayList<User> friends;
     
- // Constructor that initializes new users with a name, status, and friends ArrayList.
-    public User(String name, Status status) {	
+    public User(String name, Status status) {	// Constructor that initializes new users with a name, status, and friends ArrayList.
         this.name = name;
         this.status = status;
-        this.friends = new ArrayList<>();;
+        friends = new ArrayList<>();
     }
 
     public String getName() {					// Returns user's name.
@@ -44,7 +43,8 @@ public class User {
         this.status = status;
     }
 
-   
+  
+
     public boolean addFriend(User friend){		// Method that adds friends to current user.
         if(!friends.contains(friend)){
             return friend.friends.add(this) && friends.add(friend);
@@ -61,5 +61,4 @@ public class User {
     		System.out.println(u.getName());
     }
 }
-
 

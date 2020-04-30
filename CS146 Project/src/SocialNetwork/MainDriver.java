@@ -9,6 +9,7 @@ public class MainDriver {
 		{
 			Scanner scan = new Scanner(System.in);
 	    	
+			
 			System.out.println("Testing network and user functions.");
 	    	System.out.println();
 	    	
@@ -24,8 +25,8 @@ public class MainDriver {
 	    	User ryan = new User("Ryan Tran", Status.Online);
 	    	User timothy = new User("Timothy Yang", Status.Busy);
 	    			
-	    	n.addUser(david);
-	    	n.addUser(samson);
+	    	//n.addUser(david);
+	    	//n.addUser(samson);
 	    			
 	    	System.out.println("Printing current users:");
 	    			
@@ -98,12 +99,13 @@ public class MainDriver {
 	    	n.getUsers();
 	    	System.out.println();
 	    	
+	    	
 	    	System.out.println("Printing adjacency list:");
 	    	ArrayList<ArrayList<User>> al = n.adjecencyList();
 	    	
-	    	for (int i = 0; i < n.users.size(); i++)
+	    	for (int i = 0; i < al.size(); i++)
 	    	{
-	    		System.out.println(n.users.get(i).getName() + "'s friends:");
+	    		System.out.println(al.get(i) + "'s friends:");
 	    		ArrayList<User> friendGroup = al.get(i);
 	    		for (User u : friendGroup)
 	    			System.out.println(u.getName());
