@@ -12,12 +12,6 @@ public class User {
     private Status status;
     private String imageLoc;
     ArrayList<User> friends;
-    
-    public User(String name, Status status) {	// Constructor that initializes new users with a name, status, and friends ArrayList.
-        this.name = name;
-        this.status = status;
-        friends = new ArrayList<>();
-    }
 
     public String getName() {					// Returns user's name.
         return name;
@@ -43,7 +37,11 @@ public class User {
         this.status = status;
     }
 
-  
+    public User(String name, Status status) {	// Constructor that initializes new users with a name, status, and friends ArrayList.
+        this.name = name;
+        this.status = status;
+        friends = new ArrayList<>();
+    }
 
     public boolean addFriend(User friend){		// Method that adds friends to current user.
         if(!friends.contains(friend)){
@@ -61,4 +59,3 @@ public class User {
     		System.out.println(u.getName());
     }
 }
-

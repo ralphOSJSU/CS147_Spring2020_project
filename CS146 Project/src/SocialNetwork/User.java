@@ -1,65 +1,103 @@
-
 package SocialNetwork;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
-	/*
- * Class that handles users and their details.
+/*
+ * This class is a represent's a user's profile.
  */
 
-public class User {
+public class User 
+{
+	// Instance variables.
+	private BufferedImage picture;
     private String name;
     private Status status;
-    private String imageLoc;
     private ArrayList<User> friends;
     
- // Constructor that initializes new users with a name, status, and friends ArrayList.
-    public User(String name, Status status) {	
+    // Constructor that initializes new users with a name, status, and friends ArrayList.
+    public User(String name, Status status)
+    {	
         this.name = name;
         this.status = status;
         this.friends = new ArrayList<>();;
     }
 
-    public String getName() {					// Returns user's name.
+    // The method returns the profile picture of the user.
+    public BufferedImage getProfilePicture()
+    {
+    	return picture;
+    }
+    
+    // The method sets the profile picture of the user.
+    public void setProfilePicture(BufferedImage newPicture)
+    {
+    	this.picture = newPicture;
+    }
+    
+    // Returns the user's name.
+    public String getName() 
+    {					
         return name;
     }
 
-    public void setName(String name) {			// Changes user's name.
+    // Changes user's name.
+    public void setName(String name) 
+    {			
         this.name = name;
     }
 
+    // Checks if one user is the same as another.
     @Override
-    public boolean equals(Object o) {									// Checks if one user is the same as another.
+    public boolean equals(Object o) 
+    {			
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return Objects.equals(name, user.name);
     }
 
-    public Status getStatus() {					// Returns user's status.
+    // Returns user's status.
+    public Status getStatus() 
+    {					
         return status;
     }
 
-    public void setStatus(Status status) {		// Changes user's status.
+    // Changes user's status.
+    public void setStatus(Status status) 
+    {		
         this.status = status;
     }
 
-   
-    public boolean addFriend(User friend){		// Method that adds friends to current user.
+    
+    /*
+     * Adds a friend to the user's friend list and adds the user to the friend's friend list.
+     * Returns true if sucessfully added both ways. Else, returns false.
+     */
+    public boolean addFriend(User friend)
+    {		
         if(!friends.contains(friend)){
             return friend.friends.add(this) && friends.add(friend);
         }
         return false;
     }
 
-    public ArrayList<User> getFriends() {		// Returns list of user's current friends.
+    // Returns the ArrayList of user's current friends.
+    public ArrayList<User> getFriends() 
+    {		
         return friends;
     }
 
-    public void printFriends() {				// Prints out all friends of the user.
+    // Prints out all friends of the user.
+    public void printFriends() 
+    {				
     	for (User u : friends)
     		System.out.println(u.getName());
     }
+    
+    // Prints out the name and status of the user.
+    public String toString()
+    {
+    	return "The name of this user is: " + this.getName() + " and they are currently " + this.getStatus(); 
+    }
 }
-
-
