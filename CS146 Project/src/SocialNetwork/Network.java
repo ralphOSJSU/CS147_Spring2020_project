@@ -54,6 +54,28 @@ public class Network
         }
         return null;
     }
+    
+    /*
+     *  Takes a User and their friend, finds them in the network, then returns the friend's list of friends. 
+     *  Else, cannot find user or friend, return null.
+     */
+    public ArrayList<User> getFriendsListOfFriends(User u, User friend)
+    {
+    	// Find the User in the network.
+    	if (this.search(u.getName()) != null)
+    	{
+    		// Find the friend in the user's friend list.
+    		for (User user : u.getFriends())
+    		{
+    			// If the friend is found, return the friend's list of friends.
+                if(user.getName().equals(friend.getName()))
+                {
+                	return user.getFriends();
+                }
+    		}
+    	}
+    	return null;
+    }
 
     // Creates an adjacency list for the network using the users and their friends.
     public ArrayList<ArrayList<User>> adjecencyList()

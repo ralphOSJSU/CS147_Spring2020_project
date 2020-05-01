@@ -145,6 +145,18 @@ public class MainDriver
 			System.out.println();
 		}
 
+		// 22. Tests the friendsOfFriends method.
+		System.out.println("(22) Adding David Nguyen, setting Ralph as his friend, and getting Ralph's Friends via David.");
+		User david = new User("David Nguyen", Status.Invisible);
+		n.addUser(david);
+		david.addFriend(ralph);
+		
+		// Now David and Ralph are friends. It get's Ralph's friends via David.
+		ArrayList<User> friendGroupTwo = n.getFriendsListOfFriends(david, ralph);
+		for (User u : friendGroupTwo)
+			System.out.println(u.getName());
+		System.out.println();
+		
 		scan.close();
 	}
 }
