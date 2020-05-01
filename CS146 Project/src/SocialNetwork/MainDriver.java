@@ -9,31 +9,26 @@ public class MainDriver {
 		{
 			Scanner scan = new Scanner(System.in);
 	    	
-			// Comment in MainDriver.java
-			// Changes part 2
-			// This is Ralphs comment
-			
 			System.out.println("Testing network and user functions.");
 	    	System.out.println();
 	    	
 	    	Network n = new Network();
 			
-	    	System.out.println("Printing current users:");
-	    	n.getUsers();
+	    	System.out.println("Printing current users: ");
+	    	n.printUsers();		// Previous getUser() method printed users, so I changed method to printUsers().
 	    	System.out.println();
 	    			
-	    	System.out.println("Adding creators: Ryan Tran and Timothy Yang");
+	    	System.out.println("Adding creators: Terry Hong and Ralph Orteza");
 	    	System.out.println();
 	    			
-	    	User ryan = new User("Ryan Tran", Status.Online);
-	    	User timothy = new User("Timothy Yang", Status.Busy);
+	    	User terry = new User("Terry Hong", Status.Online);
+	    	User ralph = new User("Ralph Orteza", Status.Busy);
 	    			
-	    	//n.addUser(david);
-	    	//n.addUser(samson);
+	    	n.addUser(terry);
+	    	n.addUser(ralph);
 	    			
-	    	System.out.println("Printing current users:");
-	    			
-	    	n.getUsers();
+	    	System.out.println("Printing current users: " );
+	    	n.printUsers();
 	    	System.out.println();
 	    			
 	    	System.out.println("Adding user: Faramarz Mortezaie");
@@ -44,19 +39,18 @@ public class MainDriver {
 	    	n.addUser(mortezaie);
 	    			
 	    	System.out.println("Printing current users:");
-	    			
-	    	n.getUsers();
+	    	n.printUsers();
 	    	System.out.println();
 			
-	    	System.out.println("Adding Mortezaie and Ryan to Timothy's friend's list:");
+	    	System.out.println("Adding Mortezaie and Terry to Ralph's friend's list:");
 	    	System.out.println();
 	    			
-	    	timothy.addFriend(ryan);
-	    	timothy.addFriend(mortezaie);
+	    	ralph.addFriend(terry);
+	    	ralph.addFriend(mortezaie);
 			
-	    	System.out.println("Printing Timothy's friend's list:");
+	    	System.out.println("Printing Ralph's friends list:");
 	    			
-	    	timothy.printFriends();
+	    	ralph.printFriends();
 	    	System.out.println();
 	    	
 	    	System.out.println("Printing Mortezaie's status:");
@@ -74,28 +68,28 @@ public class MainDriver {
 	    	System.out.println();
 	    	
 	    	System.out.println("Checking if two users are the same:");
-	    	System.out.print("Ryan Tran and Ryan Tran: ");
-	    	System.out.println(ryan.equals(ryan));
-	    	System.out.print("Ryan Tran and Faramarz Mortezaie: ");
-	    	System.out.println(ryan.equals(mortezaie));
+	    	System.out.print("Terry Hong and Terry Hong: ");
+	    	System.out.println(terry.equals(terry));					// That's the Object class .equals() though.
+	    	System.out.print("Terry Hong and Faramarz Mortezaie: ");
+	    	System.out.println(terry.equals(mortezaie));
 	    	System.out.println();
 	    	
-	    	System.out.println("Searching for user: Yang Timothy");
-	    	System.out.println(n.search("Yang Timothy"));
-	    	System.out.println("Searching for user: Timothy Yang");
-	    	System.out.println(n.search("Timothy Yang"));
+	    	System.out.println("Searching for user: Orteza Ralph");
+	    	System.out.println(n.search("Orteza Ralph"));
+	    	System.out.println("Searching for user: Ralph Orteza");
+	    	System.out.println(n.search("Ralph Orteza").getName());
 	    	System.out.println();
 	    	
-	    	System.out.println("Removing Ryan Tran from the network:");
-	    	n.deleteUser(ryan);
+	    	System.out.println("Removing Terry Hong from the network:");
+	    	n.deleteUser(terry);
 	    	System.out.println();
 	    	
 	    	System.out.println("Printing new current users:");
 	    	n.getUsers();
 	    	System.out.println();
 	    	
-	    	System.out.println("Re-adding Ryan Tran to the network:");
-	    	n.addUser(ryan);
+	    	System.out.println("Re-adding Terry Hong to the network:");
+	    	n.addUser(terry);
 	    	System.out.println();
 	    	
 	    	System.out.println("Printing new current users:");
@@ -108,7 +102,7 @@ public class MainDriver {
 	    	
 	    	for (int i = 0; i < al.size(); i++)
 	    	{
-	    		System.out.println(al.get(i)+ "'s friends:");
+	    		System.out.println(n.getUsers().get(i).getName() + "'s friends:");	// This is because before it was split, they were in same class so same visiblity.
 	    		ArrayList<User> friendGroup = al.get(i);
 	    		for (User u : friendGroup)
 	    			System.out.println(u.getName());

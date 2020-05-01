@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // Social Network Project
-// By .....
+// By Ryan Tran and Timothy Yang
 // Class that handles the network and the management of its users.
 
 
@@ -67,8 +67,8 @@ public class Network {
     	User ryan = new User("Ryan Tran", Status.Online);
     	User timothy = new User("Timothy Yang", Status.Busy);
     			
-    	//n.addUser(david);
-    	//n.addUser(samson);
+    	n.addUser(ryan);
+    	n.addUser(timothy);
     			
     	System.out.println("Printing current users:");
     			

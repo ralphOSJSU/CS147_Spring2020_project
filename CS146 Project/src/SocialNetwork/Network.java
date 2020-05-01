@@ -3,7 +3,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 // Social Network Project
-// By .....
+// By Terry Hong and Ralph Orteza
 // Class that handles the network and the management of its users.
 
 
@@ -14,10 +14,15 @@ public class Network {
         users = new ArrayList<>();
     }
 
-    public void getUsers() {				// Prints out all users in the network.
+    public void printUsers() {				// Prints out all users in the network.
         for (User u : users)
         	System.out.println(u.getName());
     }
+        
+    public ArrayList<User> getUsers() {				// Prints out all users in the network.
+        return users;
+    }
+        
 
     public boolean addUser(User u) {		// Adds a user to the network if they are not already in the network. Returns true if successful.
         if(!users.contains(u)){

@@ -1,16 +1,17 @@
 
 package SocialNetwork;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
-	/*
+/*
  * Class that handles users and their details.
  */
 
 public class User {
+	private BufferedImage picture;
     private String name;
     private Status status;
-    private String imageLoc;
     private ArrayList<User> friends;
     
  // Constructor that initializes new users with a name, status, and friends ArrayList.
@@ -20,6 +21,16 @@ public class User {
         this.friends = new ArrayList<>();;
     }
 
+    public BufferedImage getProfilePicture()
+    {
+    	return picture;
+    }
+    
+    public void setProfilePicture(BufferedImage newPicture)
+    {
+    	this.picture = newPicture;
+    }
+    
     public String getName() {					// Returns user's name.
         return name;
     }
@@ -29,7 +40,7 @@ public class User {
     }
 
     @Override
-    public boolean equals(Object o) {									// Checks if one user is the same as another.
+    public boolean equals(Object o) {			// Checks if one user is the same as another.
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
@@ -59,6 +70,11 @@ public class User {
     public void printFriends() {				// Prints out all friends of the user.
     	for (User u : friends)
     		System.out.println(u.getName());
+    }
+    
+    public String toString()
+    {
+    	return "The name of this user is: " + this.getName(); 
     }
 }
 
