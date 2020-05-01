@@ -108,7 +108,7 @@ public class MainDriver {
 	    	
 	    	for (int i = 0; i < al.size(); i++)
 	    	{
-	    		System.out.println(al. + "'s friends:");
+	    		System.out.println(al.get(i)+ "'s friends:");
 	    		ArrayList<User> friendGroup = al.get(i);
 	    		for (User u : friendGroup)
 	    			System.out.println(u.getName());
