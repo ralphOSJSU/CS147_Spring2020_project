@@ -1,0 +1,17 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class MyCatImage extends JFrame
+{
+	private JPanel imagePanel;
+	private JPanel buttonPanel;
+	private JLabel imageLabel;
+	private JButton button;
+	
+	// Constructor
+	public MyCatImage()
+	{
+		
+	}
+	
+}

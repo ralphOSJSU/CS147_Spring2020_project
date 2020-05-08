@@ -1,0 +1,13 @@
+import javax.swing.*;
+
+public class TempConverter extends JFrame
+{
+	private JLabel label1, label2;		
+	private JTextField fahrenheitTemp;
+	private JTextField celciusTemp;
+	private JPanel fpanel;
+	private JPanel cpanel;
+	private JPanel sliderPanel;
+	private JSlider slider;
+	
+}

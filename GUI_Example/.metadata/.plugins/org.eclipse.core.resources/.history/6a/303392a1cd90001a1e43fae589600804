@@ -1,0 +1,45 @@
+import javax.swing.*;
+
+public class TempConverter extends JFrame
+{
+	private JLabel label1, label2;		// Message labels	
+	private JTextField fahrenheitTemp;	// Fahrenheit temp
+	private JTextField celciusTemp;		// Celcius temp
+	private JPanel fpanel;				// Fahrenheit panel
+	private JPanel cpanel;				// Celcius panel
+	private JPanel sliderPanel;			// Slider panel
+	private JSlider slider;				// Temperature adjuster
+	
+	
+	// Constructor
+	public TempConverter()
+	{
+		// Set the title.
+		setTitle("Temperatures");
+		
+		// Specify an action for the close button.
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Create the message labels.
+		label1 = new JLabel("Fahrenheit: ");
+		label2 = new JLabel("Celsius: ");
+		
+		// Create the read-only text fields.
+		fahrenheitTemp = new JTextField("32.0", 10);
+		fahrenheitTemp.setEditable(false);
+		celciusTemp = new JTextField("0.0", 10);
+		celciusTemp.setEditable(false);
+		
+		// Create the slider.
+		slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 0);
+		slider.setMajorTickSpacing(20);		// Major tick every 20
+		slider.setMinorTickSpacing(5);     	// Minor tick every 5
+		slider.setPaintTicks(true);			// Display tick marks
+		slider.setPaintLabels(true);		// Display numbers
+		slider.addChangeListener(new SliderListener());
+		
+		
+		
+		
+	}
+}

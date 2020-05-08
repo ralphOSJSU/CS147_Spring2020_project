@@ -1,0 +1,33 @@
+import java.awt.*;
+import javax.swing.*;
+
+public class MyCatImage extends JFrame
+{
+	private JPanel imagePanel;		// To hold the label
+	private JPanel buttonPanel;		// To hold a button
+	private JLabel imageLabel;		// To show an image
+	private JButton button;			// To get an image
+	
+	// Constructor
+	public MyCatImage()
+	{
+		// Set the title.
+		setTitle("My Cat");
+		
+		// Specify an action for the close button.
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		// Create a BorderLayout manager.
+		setLayout(new BorderLayout());
+		
+		// Build the panels.
+		buildImagePanel();
+		buildButtonPanel();
+		
+		// Add the panels to the content pane.
+		add(ImagePanel, BorderLayout.CENTER);
+		
+		
+	}
+	
+}

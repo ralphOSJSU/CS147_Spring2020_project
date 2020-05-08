@@ -1,0 +1,10 @@
+import javax.swing.*;
+
+public class JListExample extends JFrame
+{
+	private JList dayList;
+	private String[] days = {"Monday", "Tuesday", "Wednesday"};
+	private JButton but;
+	private JTextField text;
+	private JPanel panel;
+}
