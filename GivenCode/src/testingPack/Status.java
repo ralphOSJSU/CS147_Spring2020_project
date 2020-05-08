@@ -1,7 +1,6 @@
 package testingPack;
 
-
-//Enum that contains the various statuses of users.
+// Enum that contains the various statuses of users.
 
 public enum Status {
 	Online,
