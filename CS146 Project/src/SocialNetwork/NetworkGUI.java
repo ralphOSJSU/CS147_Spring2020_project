@@ -6,14 +6,19 @@ import javax.swing.*;
 
 public class NetworkGUI extends JFrame
 {
-	private Network socialNetwork;
-	private User defaultUser;
-	private final int WINDOW_WIDTH = 500;		// The width of the window.
-	private final int WINDOW_HEIGHT = 500;		// The height of the window.
+	private Network socialNetwork;				// The Social Network.
+	private User defaultUser;					// The defaultUser's profile.
+	private final int WINDOW_WIDTH = 600;		// The width of the window.
+	private final int WINDOW_HEIGHT = 600;		// The height of the window.
 	private JPanel userPanel;					// To hold the user's profile.
 	private JPanel networkPanel;				// To hold the network of Users.
 	private JPanel searchPanel;					// To hold the search bar.
 	
+	// ArrayList of panels for EACH USER with JScrollPane? Jeez
+	// BorderLayout with left, right, and bottom.
+	// Left is the default user
+	// Right is the network, with the scrolling
+	// Bottom is the search bar.
 	
 	// Constructor
 	public NetworkGUI(User defaultUser, Network socialNetwork)
@@ -53,8 +58,8 @@ public class NetworkGUI extends JFrame
 	{
 		// Create 7 items: 5 JLabels, 2 buttons.
 		JLabel displayTest = new JLabel("Your Profile");
-		JLabel userPicture = new JLabel();
-		JLabel userName = new JLabel();
+		JLabel userPicture = new JLabel(defaultUser.getProfilePicture());
+		JLabel userName = new JLabel(defaultUser.getName());
 		JLabel userFriends = new JLabel();
 		JButton leaveNetworkBut = new JButton("Leave Network");
 		JButton modifyProfileBut = new JButton("Modify Profile");
@@ -69,6 +74,8 @@ public class NetworkGUI extends JFrame
 		userPanel.add(userFriends);
 		userPanel.add(leaveNetworkBut);
 		userPanel.add(modifyProfileBut);
+		
+		userPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
 	}
 	
 	private void buildNetworkPanel()
@@ -89,7 +96,7 @@ public class NetworkGUI extends JFrame
 		// Initialize the JPanel.
 		searchPanel = new JPanel();
 		
-		// Add the JLabelm JTextField, and JButton to the panel.
+		// Add the JLabel. JTextField, and JButton to the panel.
 		searchPanel.add(nameSearch);
 		searchPanel.add(textField);
 		searchPanel.add(searchBut);

@@ -3,6 +3,8 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import javax.swing.ImageIcon;
+
 /*
  * This class is a represent's a user's profile.
  */
@@ -10,7 +12,7 @@ import java.util.Objects;
 public class User 
 {
 	// Instance variables.
-	private BufferedImage picture;
+	private ImageIcon picture;
     private String name;
     private Status status;
     private ArrayList<User> friends;
@@ -21,16 +23,26 @@ public class User
         this.name = name;
         this.status = status;
         this.friends = new ArrayList<>();;
+        this.picture = null;
+    }
+    
+    // Default constructor that initializes all variables to null or empty.
+    public User()
+    {	
+        this.name = null;
+        this.status = null;
+        this.friends = new ArrayList<>();;
+        this.picture = null;
     }
 
     // The method returns the profile picture of the user.
-    public BufferedImage getProfilePicture()
+    public ImageIcon getProfilePicture()
     {
     	return picture;
     }
     
     // The method sets the profile picture of the user.
-    public void setProfilePicture(BufferedImage newPicture)
+    public void setProfilePicture(ImageIcon newPicture)
     {
     	this.picture = newPicture;
     }
