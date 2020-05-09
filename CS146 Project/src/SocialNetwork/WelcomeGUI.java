@@ -119,14 +119,21 @@ public class WelcomeGUI extends JFrame
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			// Create a temporary Network to store the Network.
-			Network tempNetwork = socialNetwork;
-			
-			// Closes the window.
-			dispose();
-			
-			// Now go to the main network GUI.
-			new NetworkGUI(defaultUser, tempNetwork);
+			if (defaultUser.getName() == null)
+			{
+				JOptionPane.showMessageDialog(null, "Please enter a name before entering.");
+			}
+			else
+			{
+				// Create a temporary Network to store the Network.
+				Network tempNetwork = socialNetwork;
+				
+				// Closes the window.
+				dispose();
+				
+				// Now go to the main network GUI.
+				new NetworkGUI(defaultUser, tempNetwork);
+			}
 		}
 	}
 	
