@@ -1,4 +1,5 @@
 package SocialNetwork;
+import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 

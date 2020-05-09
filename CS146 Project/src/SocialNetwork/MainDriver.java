@@ -158,5 +158,8 @@ public class MainDriver
 		System.out.println();
 		
 		scan.close();
+		
+		WelcomeGUI test = new WelcomeGUI(n);
+		// NetworkGUI test = new NetworkGUI();
 	}
 }

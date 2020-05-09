@@ -72,12 +72,24 @@ public class User
     
     /*
      * Adds a friend to the user's friend list and adds the user to the friend's friend list.
-     * Returns true if sucessfully added both ways. Else, returns false.
+     * Returns true if successfully added both ways. Else, returns false.
      */
     public boolean addFriend(User friend)
     {		
         if(!friends.contains(friend)){
             return friend.friends.add(this) && friends.add(friend);
+        }
+        return false;
+    }
+    
+    /*
+     * Removes a friend from the user's friend list and removes the user from the friend's friend list.
+     * Returns true if successfully removed both ways. Else, returns false.
+     */
+    public boolean removeFriend(User friend)
+    {		
+        if(!friends.contains(friend)){
+            return friend.friends.remove(this) && friends.remove(friend);
         }
         return false;
     }
@@ -94,6 +106,12 @@ public class User
     	for (User u : friends)
     		System.out.println(u.getName());
     }
+    
+    // Displays the profile's information and friendProfiles.
+	public void display()
+	{
+		
+	}
     
     // Prints out the name and status of the user.
     public String toString()
