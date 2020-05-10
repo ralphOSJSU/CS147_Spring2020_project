@@ -62,20 +62,19 @@ public class NetworkGUI extends JFrame
 		buildAddFriendPanel();
 		
 		// Set the JScrollPane for the network.
-		JScrollPane scrollPane = new JScrollPane(networkPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane scrollPaneNetwork = new JScrollPane(networkPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane scrollPaneAddFriend = new JScrollPane(addFriendPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		// Set the size of the panels.
 		userPanel.setPreferredSize(new Dimension(200, WINDOW_HEIGHT - 100));
-		scrollPane.setPreferredSize(new Dimension(550, WINDOW_HEIGHT - 100));
-		addFriendPanel.setPreferredSize(new Dimension(250, WINDOW_HEIGHT - 100));
+		scrollPaneNetwork.setPreferredSize(new Dimension(550, WINDOW_HEIGHT - 100));
+		scrollPaneAddFriend.setPreferredSize(new Dimension(250, WINDOW_HEIGHT - 100));
 		
 		// Add the JPanels to the network.
 		add(userPanel, BorderLayout.WEST);
-		add(scrollPane, BorderLayout.CENTER);
-		add(addFriendPanel, BorderLayout.EAST);
+		add(scrollPaneNetwork, BorderLayout.CENTER);
+		add(scrollPaneAddFriend, BorderLayout.EAST);
 		add(searchPanel, BorderLayout.SOUTH);
-		
-		
 		
 		// Display the window.
 		setVisible(true);

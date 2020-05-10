@@ -163,6 +163,16 @@ public class MainDriver
 		
 		scan.close();
 		
+		
+//		n.addUser(new User("Jason Nguyen", Status.Invisible));
+//		n.addUser(new User("David Ho", Status.Invisible));
+//		n.addUser(new User("Jason Bourne", Status.Invisible));
+//		n.addUser(new User("Steven Dang", Status.Invisible));
+//		n.addUser(new User("Steven Vu", Status.Invisible));
+//		n.addUser(new User("Tommy Nguyen", Status.Invisible));
+//		n.addUser(new User("Tommy Vu", Status.Invisible));
+		
+		
 		User defaultUser = new User();
 		new WelcomeGUI(defaultUser, n);
 	}
