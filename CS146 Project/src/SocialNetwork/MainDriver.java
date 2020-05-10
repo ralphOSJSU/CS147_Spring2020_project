@@ -163,8 +163,6 @@ public class MainDriver
 		
 		scan.close();
 		
-
-		
 		User defaultUser = new User();
 		new WelcomeGUI(defaultUser, n);
 	}

@@ -23,13 +23,14 @@ public class NetworkGUI extends JFrame
 	private Network socialNetwork;				// The Social Network.
 	private User defaultUser;					// The defaultUser's profile.
 	private User currentNetworkUser;
-	private final int WINDOW_WIDTH = 900;		// The width of the window.
+	private final int WINDOW_WIDTH = 1000;		// The width of the window.
 	private final int WINDOW_HEIGHT = 600;		// The height of the window.
 	private JPanel userPanel;					// To hold the user's profile.
 	private JPanel networkPanel;				// To hold the network of Users.
 	private JPanel addFriendPanel;				// To hold the JList of friends.
 	private JPanel searchPanel;					// To hold the search bar.\
 	private JList addFriendList;
+	private JTextField searchTextField;
 	
 
 	// Search panel uses the search() method in network, using the string from JTextField.
@@ -54,20 +55,19 @@ public class NetworkGUI extends JFrame
 		// Add a BorderLayout manager to the content panel.
 		setLayout(new BorderLayout());
 		
-		// Set default profile pictures for all users in the Social Network.
-		setDefaultNetworkPic();
-		
 		// Build the JPanels.
 		buildUserPanel();
 		buildNetworkUserPanel();
 		buildSearchPanel();
 		buildAddFriendPanel();
 		
+		// Set the JScrollPane for the network.
+		JScrollPane scrollPane = new JScrollPane(networkPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
 		// Set the size of the panels.
 		userPanel.setPreferredSize(new Dimension(200, WINDOW_HEIGHT - 100));
-		
-		// Set the JScrollPane for the network.
-		JScrollPane scrollPane = new JScrollPane(networkPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane.setPreferredSize(new Dimension(550, WINDOW_HEIGHT - 100));
+		addFriendPanel.setPreferredSize(new Dimension(250, WINDOW_HEIGHT - 100));
 		
 		// Add the JPanels to the network.
 		add(userPanel, BorderLayout.WEST);
@@ -75,8 +75,9 @@ public class NetworkGUI extends JFrame
 		add(addFriendPanel, BorderLayout.EAST);
 		add(searchPanel, BorderLayout.SOUTH);
 		
+		
+		
 		// Display the window.
-		// pack();
 		setVisible(true);
 	}
 	
@@ -113,7 +114,7 @@ public class NetworkGUI extends JFrame
         c.gridx = 0;
         c.gridy = 0;
         c.gridheight = 1;
-        c.insets = new Insets(0, 0, 40, 0);
+        c.insets = new Insets(0, 0, 20, 0);
 		userPanel.add(displayText,c);
         c.insets = new Insets(0, 0, 10, 0);
         c.gridy = 1;
@@ -139,9 +140,13 @@ public class NetworkGUI extends JFrame
 		networkPanel.setLayout(new GridLayout(socialNetwork.getUsers().size(), 1));
 		
 		// Add each user in the network into the JPanel.
-		for (int i = 1; i < socialNetwork.getUsers().size(); i++)
+		for (int i = 0; i < socialNetwork.getUsers().size(); i++)
 		{
-			networkPanel.add(buildNetworkUserPanel(socialNetwork.getUsers().get(i)));
+			// Add the NetworkUserPanel to a left-aligned tempPanel, then add the tempPanel to the networkPanel.
+			JPanel tempPanel = new JPanel();
+			tempPanel.setLayout(new FlowLayout(FlowLayout.LEFT,3,3));
+			tempPanel.add(buildNetworkUserPanel(socialNetwork.getUsers().get(i)));
+			networkPanel.add(tempPanel);
 		}
 	}
 	
@@ -164,38 +169,37 @@ public class NetworkGUI extends JFrame
 		}
 		else
 		{
-			userFriends.setText("Their Friends: (Can't show --> Private");
+			userFriends.setText("Their Friends: (Can't show --> Private)");
 		}
+		
+		
 
 
 		// Initialize a sub JPanel, and add the 5 items to the sub JPanel.
 		JPanel userNetworkPanel = new JPanel();
 		userNetworkPanel.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		c.fill =  c.fill = GridBagConstraints.BOTH;
-        c.gridheight = 1;
+		c.anchor = GridBagConstraints.LINE_START;
+        c.gridheight = 3;
         c.gridwidth = 1;
         c.gridx = 0;
         c.gridy = 0;
-        c.insets = new Insets(10, 10, 10, 20);
+        c.insets = new Insets(10, 10, 0, 10);
 		userNetworkPanel.add(userPicture, c);
-        c.insets = new Insets(0, 10, 0, 20);
+        c.insets = new Insets(10, 10, 0, 10);
+        c.gridheight = 2;
 		c.gridx = 1;
 		c.gridy = 0;
 		userNetworkPanel.add(userName, c);
 		c.gridx = 1;
 		c.gridy = 1;
 		userNetworkPanel.add(userStatus, c);
+        c.insets = new Insets(25, 10, 15, 10);
 		c.gridx = 1;
 		c.gridy = 2;
 		userNetworkPanel.add(userFriends, c);
 		c.gridx = 2;
 		c.gridy = 1;
-//        c.insets = new Insets(0, 10, 0, 10);
-//		userNetworkPanel.add(addFriendBut, c);
-
-		// Set the border for the sub JPanel.
-		userNetworkPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
 		
 		// Return the sub JPanel.
 		return userNetworkPanel;
@@ -230,34 +234,22 @@ public class NetworkGUI extends JFrame
 	{
 		// Create a JLabel, JTextField, and JButton.
 		JLabel nameSearch = new JLabel("Name Search");
-		JTextField textField = new JTextField(20);
+		searchTextField = new JTextField(20);
 		JButton searchBut = new JButton("Search");
+		
+		// Add an Action Listener to the search button.
+		searchBut.addActionListener(new searchButListener());
 		
 		// Initialize the JPanel.
 		searchPanel = new JPanel();
 		
+		// Set the size of the searchPanel.
+		searchPanel.setPreferredSize(new Dimension(200, 50));
+		
 		// Add the JLabel. JTextField, and JButton to the panel.
 		searchPanel.add(nameSearch);
-		searchPanel.add(textField);
+		searchPanel.add(searchTextField);
 		searchPanel.add(searchBut);
-	}
-	
-	// Dont put this in a method. Becase it the lines multiple times.
-	private void setDefaultNetworkPic()
-	{
-		// Add profile pictures for all of the Users in the social network.
-		ImageIcon defaultPic = new ImageIcon(Image.class.getResource("/resources/Default_NetworkPic.jpg"));
-		Image img = defaultPic.getImage();
-		Image newImg = img.getScaledInstance(.getWidth(), .getHeight(), Image.SCALE_SMOOTH);
-		ImageIcon resizedDefaultPic = new ImageIcon(newImg);
-		for (User currentUser : socialNetwork.getUsers())
-		{
-			// If the user does not have an image, resize the DefaultPic and assign it to the User.
-			if (currentUser.getProfilePicture() == null)
-			{
-				currentUser.setProfilePicture(resizedDefaultPic);
-			}
-		}
 	}
 	
 	// Add the currentNetworkUser to the defaultUser's friend list, then reopen the GUI to update information.
@@ -306,6 +298,32 @@ public class NetworkGUI extends JFrame
 			dispose();
 			
 			new WelcomeGUI(defaultUser, socialNetwork);
+		}
+	}
+	
+	private class searchButListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			String input = searchTextField.getText();
+			int index;
+			boolean found = false;
+	        for (index = 0; index < socialNetwork.getUsers().size(); index++) 
+	        {
+	            if(socialNetwork.getUsers().get(index).getName().equalsIgnoreCase(input))
+	            {
+	    			found = true;
+	    			break;
+	            }
+	        }
+	        if (found)
+        	{
+	        	JOptionPane.showMessageDialog(null, "The user is at the " + (index + 1) + "th position.");
+        	}
+	        else
+	        {
+	        	JOptionPane.showMessageDialog(null, "The user is not in the social network.");
+	        }
 		}
 	}
 }

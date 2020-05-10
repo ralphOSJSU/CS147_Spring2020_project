@@ -52,6 +52,9 @@ public class WelcomeGUI extends JFrame
 		add(joinButton, BorderLayout.SOUTH);
 		joinButton.addActionListener(new joinButtonListener());
 		
+		// Disable resizing the window.
+		this.setResizable(false);
+		
 		// Display the window.
 		setVisible(true);
 	}
@@ -65,6 +68,13 @@ public class WelcomeGUI extends JFrame
 		JButton setName = new JButton("Set Name");
 		setName.addActionListener(new setNameButListener());
 		userNameInput = new JTextField(20);
+		
+		// If defaultUser has a name, set the JTextField userNameInput to it.
+		if (defaultUser.getName() != null)
+		{
+			String selection = defaultUser.getName();
+			userNameInput.setText(selection);
+		}
 		
 		// Initialize the JPanel.
 		namePanel = new JPanel();
@@ -89,6 +99,14 @@ public class WelcomeGUI extends JFrame
 		selectImage.setPreferredSize(new Dimension(100,100));
 		selectImageBut.setPreferredSize(new Dimension(80,80));
 		selectImageBut.addActionListener(new setImageButListener());
+		
+		// If defaultUser already has a picture, set the JLabel selectImage to the picture.
+		if (defaultUser.getProfilePicture() != null)
+		{
+			userImage = defaultUser.getProfilePicture();
+			selectImage.setIcon(userImage);
+			selectImage.setText(null);
+		}
 
 		// Initialize the JPanel.
 		imagePanel = new JPanel();
@@ -133,6 +151,32 @@ public class WelcomeGUI extends JFrame
 					Image newImg = img.getScaledInstance(selectImage.getWidth(), selectImage.getHeight(), Image.SCALE_SMOOTH);
 					ImageIcon resizedDefaultPic = new ImageIcon(newImg);
 					defaultUser.setProfilePicture(resizedDefaultPic);
+				}
+				
+				// If the user entered an empty name, assign the name to "Default User".
+				if (defaultUser.getName().equals("") || defaultUser.getName().equals(" "))
+				{
+					defaultUser.setName("Default User");
+				}
+				
+				// Add profile pictures for all of the Users in the social network.
+				ImageIcon defaultPic = new ImageIcon(Image.class.getResource("/resources/Default_NetworkPic.jpg"));
+				Image img = defaultPic.getImage();
+				Image newImg = img.getScaledInstance(selectImage.getWidth(), selectImage.getHeight(), Image.SCALE_SMOOTH);
+				ImageIcon resizedDefaultPic = new ImageIcon(newImg);
+				for (User currentUser : socialNetwork.getUsers())
+				{
+					currentUser.setProfilePicture(resizedDefaultPic);
+				}
+				
+				
+				for (User currentUser : socialNetwork.getUsers())
+				{
+					// If the user does not have an image, resize the DefaultPic and assign it to the User.
+					if (currentUser.getProfilePicture() == null)
+					{
+						currentUser.setProfilePicture(resizedDefaultPic);
+					}
 				}
 				
 				// Closes the window.

@@ -88,7 +88,8 @@ public class User
      */
     public boolean addFriend(User friend)
     {		
-        if(!friends.contains(friend)){
+        if(!friends.contains(friend))
+        {
             return friend.friends.add(this) && friends.add(friend);
         }
         return false;
@@ -100,7 +101,8 @@ public class User
      */
     public boolean removeFriend(User friend)
     {		
-        if(!friends.contains(friend)){
+        if(!friends.contains(friend))
+        {
             return friend.friends.remove(this) && friends.remove(friend);
         }
         return false;
@@ -122,12 +124,18 @@ public class User
     // Displays the profile's information and friendProfiles.
 	public void display()
 	{
-		
+		System.out.println(this.getName() + " Status " + this.getStatus());
+		System.out.print("Friends of " + this.getName() + ": ");
+		for (User currentUser : friends)
+		{
+			System.out.print(currentUser.getName() + ", ");
+		}
+		System.out.println("");
 	}
     
     // Prints out the name and status of the user.
     public String toString()
     {
-    	return this.getName() + " Status: " + this.getStatus();
+    	return String.format("%40s", this.getName());
     }
 }

@@ -69,7 +69,7 @@ public class Network
     		for (User user : u.getFriends())
     		{
     			// If the friend is found, return the friend's list of friends.
-                if(user.getName().equals(friend.getName()))
+                if(user.getName().equalsIgnoreCase(friend.getName()))
                 {
                 	return user.getFriends();
                 }
