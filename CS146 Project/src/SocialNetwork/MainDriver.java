@@ -1,16 +1,13 @@
 package SocialNetwork;
 
-import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-
-/*
+/**
  * This class creates an object of type Network and tests out the code.
+ * @author Terry Hong
+ * @author Ralph Orteza
  */
-
 public class MainDriver 
 {
 	// Main method to test the network and its users.

@@ -1,4 +1,5 @@
 package SocialNetwork;
+
 import java.awt.image.*;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -33,7 +34,8 @@ public class Network
     // Adds a given user to the network if they are not already in the network. Returns true if successful.
     public boolean addUser(User u) 
     {		
-        if(!users.contains(u)){
+        if(!users.contains(u))
+        {
             return users.add(u);
         }
         return false;
@@ -48,8 +50,10 @@ public class Network
     // Searches the network for a user by name. If found, returns the user. Else, returns null.
     public User search(String name)
     {		
-        for (User user : users) {
-            if(user.getName().equals(name)){
+        for (User user : users) 
+        {
+            if(user.getName().equals(name))
+            {
                 return user;
             }
         }

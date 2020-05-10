@@ -1,40 +1,28 @@
 package SocialNetwork;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
-import java.awt.Image;
-import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-
+import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.event.*;
 
+/**
+ * This class runs the main GUI to simulate a Social Network.
+ * @author Terry Hong
+ * @author Ralph Orteza
+ */
 public class NetworkGUI extends JFrame
 {
-	private Network socialNetwork;				// The Social Network.
-	private User defaultUser;					// The defaultUser's profile.
-	private User currentNetworkUser;
-	private final int WINDOW_WIDTH = 1000;		// The width of the window.
-	private final int WINDOW_HEIGHT = 600;		// The height of the window.
-	private JPanel userPanel;					// To hold the user's profile.
-	private JPanel networkPanel;				// To hold the network of Users.
-	private JPanel addFriendPanel;				// To hold the JList of friends.
-	private JPanel searchPanel;					// To hold the search bar.\
-	private JList addFriendList;
-	private JTextField searchTextField;
-	
-
-	// Search panel uses the search() method in network, using the string from JTextField.
-	
+	private final int 	WINDOW_WIDTH = 1000;	// The width of the window.
+	private final int 	WINDOW_HEIGHT = 600;	// The height of the window.
+	private Network 	socialNetwork;			// The Social Network.
+	private User 		defaultUser;			// The defaultUser's profile.
+	private User 		currentNetworkUser;		// The current User in the Network.
+	private JPanel 		userPanel;				// To hold the user's profile.
+	private JPanel 		networkPanel;			// To hold the network of Users.
+	private JPanel 		addFriendPanel;			// To hold the JList of friends.
+	private JPanel 		searchPanel;			// To hold the search bar.
+	private JList 		addFriendList;			// The JList for all Users in the Network.
+	private JTextField 	searchTextField;		// The search bar for the Users in the Network.
 	
 	// Constructor
 	public NetworkGUI(User defaultUser, Network socialNetwork)
@@ -48,6 +36,9 @@ public class NetworkGUI extends JFrame
 		
 		// Set the size of the window.
 		setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		
+		// Disable resizing the window.
+		this.setResizable(false);
 		
 		// Specify an action for the close button.
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,8 +71,7 @@ public class NetworkGUI extends JFrame
 		setVisible(true);
 	}
 	
-	
-
+	// Build the userPanel on the left side of the JFrame.
 	private void buildUserPanel()
 	{
 		// Create 7 items: 5 JLabels, 2 buttons.
@@ -103,7 +93,6 @@ public class NetworkGUI extends JFrame
 		// Add Action Listeners to the modifyProfileBut and the leaveNetworkBut.
 		leaveNetworkBut.addActionListener(new leaveNetworkButListener());
 		modifyProfileBut.addActionListener(new modifyProfileButListener());
-		
 		
 		// Initialize the JPanel, and put all 7 items on it.
 		userPanel = new JPanel();
@@ -130,6 +119,7 @@ public class NetworkGUI extends JFrame
         userPanel.add(modifyProfileBut,c);
 	}
 	
+	// Build the networkPanel on the center of the JFrame.
 	private void buildNetworkUserPanel()
 	{
 		// Initialize the network JPanel.
@@ -149,6 +139,7 @@ public class NetworkGUI extends JFrame
 		}
 	}
 	
+	// Build a panel for the User input from the network, then add to the main networkPanel.
 	private JPanel buildNetworkUserPanel(User networkUser)
 	{
 		// Create 5 items: 4 JLabels, 1 button.
@@ -157,6 +148,7 @@ public class NetworkGUI extends JFrame
 		JLabel userStatus = new JLabel("Status: " + networkUser.getStatus());
 		JLabel userFriends = new JLabel();
 		
+		// If defaultUser is friends with the networkUser, display their friends. Otherwise, make it private.
 		if (defaultUser.getFriends().contains(networkUser))
 		{
 			userFriends.setText("Their Friends: " + networkUser.getFriends().get(0).getName() + " ");
@@ -171,9 +163,6 @@ public class NetworkGUI extends JFrame
 			userFriends.setText("Their Friends: (Can't show --> Private)");
 		}
 		
-		
-
-
 		// Initialize a sub JPanel, and add the 5 items to the sub JPanel.
 		JPanel userNetworkPanel = new JPanel();
 		userNetworkPanel.setLayout(new GridBagLayout());
@@ -204,6 +193,7 @@ public class NetworkGUI extends JFrame
 		return userNetworkPanel;
 	}
 	
+	// Build the addFriendPanel on the right side of the JFrame.
 	private void buildAddFriendPanel()
 	{
 		// Create a JButton to add a friend.
@@ -229,6 +219,7 @@ public class NetworkGUI extends JFrame
 		addFriendPanel.add(addFriend, BorderLayout.SOUTH);
 	}
 	
+	// Build the searchPanel at the bottom of the JFrame.
 	private void buildSearchPanel()
 	{
 		// Create a JLabel, JTextField, and JButton.
@@ -256,6 +247,7 @@ public class NetworkGUI extends JFrame
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+			// Add the currentNetworkUser to the defaultUser's friend list. 
 			defaultUser.addFriend(currentNetworkUser);
 			
 			// Closes the window.
@@ -289,40 +281,44 @@ public class NetworkGUI extends JFrame
 		}
 	}
 	
-	// When the button is pressed, go back to the welcome screen.
+	// When the button is pressed, close the NetworkGUI frame and go back to the welcome screen.
 	private class modifyProfileButListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+			// Closes the window.
 			dispose();
 			
+			// Restart the WelcomeGUI screen with updated information.
 			new WelcomeGUI(defaultUser, socialNetwork);
 		}
 	}
 	
+	// Searches the social network for a User's name.
 	private class searchButListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+			// 
 			String input = searchTextField.getText();
-			int index;
+			int index = 0;
 			boolean found = false;
-	        for (index = 0; index < socialNetwork.getUsers().size(); index++) 
-	        {
+			
+			
+			while (index < socialNetwork.getUsers().size() && !found)
+			{
 	            if(socialNetwork.getUsers().get(index).getName().equalsIgnoreCase(input))
 	            {
 	    			found = true;
-	    			break;
 	            }
-	        }
+	            index++;
+			}
+			
+			// 
 	        if (found)
-        	{
-	        	JOptionPane.showMessageDialog(null, "The user is at the " + (index + 1) + "th position.");
-        	}
+	        	JOptionPane.showMessageDialog(null, "The user is at position " + index + ".");
 	        else
-	        {
 	        	JOptionPane.showMessageDialog(null, "The user is not in the social network.");
-	        }
 		}
 	}
 }

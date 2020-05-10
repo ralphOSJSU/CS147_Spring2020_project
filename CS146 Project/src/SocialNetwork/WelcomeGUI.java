@@ -6,21 +6,27 @@ import java.io.File;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * This class runs the GUI for the welcome screen to the Social Network.
+ * @author Terry Hong
+ * @author Ralph Orteza
+ */
 public class WelcomeGUI extends JFrame
 {
-	private Network socialNetwork;				// The Social Network.
-	private User defaultUser;					// The default User.
-	private final int WINDOW_WIDTH = 600;		// The width of the window.
-	private final int WINDOW_HEIGHT = 600;		// The height of the window.
-	private JPanel namePanel;					// To hold the user's name.
-	private JPanel imagePanel;					// To hold the user's image selection.
-	private JTextField userNameInput;			// To hold the user's input name.
-	private JLabel selectImage;					// To hold display the user's image.
-	private ImageIcon userImage;				// To hold the user's image.
+	private final int 	WINDOW_WIDTH = 600;		// The width of the window.
+	private final int 	WINDOW_HEIGHT = 600;	// The height of the window.
+	private Network 	socialNetwork;			// The Social Network.
+	private User 		defaultUser;			// The default User.
+	private JPanel		namePanel;				// To hold the user's name.
+	private JPanel		imagePanel;				// To hold the user's image selection.
+	private JLabel 		selectImage;			// To hold display the user's image.
+	private ImageIcon 	userImage;				// To hold the user's image.
+	private JTextField 	userNameInput;			// To hold the user's input name.
 	
+	// Constructor.
 	public WelcomeGUI(User defaultUser, Network socialNetwork)
 	{
-		// Initialize defaultUser;
+		// Initialize defaultUser.
 		this.defaultUser = defaultUser;
 		
 		// Initialize the socialNetwork.
@@ -52,22 +58,24 @@ public class WelcomeGUI extends JFrame
 		add(joinButton, BorderLayout.SOUTH);
 		joinButton.addActionListener(new joinButtonListener());
 		
-		// Disable resizing the window.
-		this.setResizable(false);
-		
 		// Display the window.
 		setVisible(true);
 	}
 
+	// Build the Title and namePanel at the top of the JFrame.
 	private void buildNamePanel()
 	{
-		// Create a JLabel and a JTextField
+		// Create 4 items: 3 JLabels and a JButton.
+		JLabel createProfileMessage = new JLabel("CREATE PROFILE TO JOIN NETWORK");
 		JLabel nameLabel = new JLabel("Name");
 		JLabel newLine = new JLabel(" ");
-		JLabel createProfileMessage = new JLabel("CREATE PROFILE TO JOIN NETWORK");
 		JButton setName = new JButton("Set Name");
-		setName.addActionListener(new setNameButListener());
+		
+		// Initialize the JTextField for the user's name.
 		userNameInput = new JTextField(20);
+		
+		// Add an Action Listener to the setName JButton.
+		setName.addActionListener(new setNameButListener());
 		
 		// If defaultUser has a name, set the JTextField userNameInput to it.
 		if (defaultUser.getName() != null)
@@ -91,6 +99,7 @@ public class WelcomeGUI extends JFrame
 		namePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
 	}
 	
+	// Build the imagePanel at the center of the JFrame.
 	private void buildImagePanel()
 	{
 		// Create a JLabel and a JButton.
@@ -132,7 +141,11 @@ public class WelcomeGUI extends JFrame
 		return resizedImage;
 	}
 	
-	// Closes the welcomeGUI and initializes the main NetworkGUI.
+	/*
+	 * Closes the WelcomeGUI window and initializes the NetworkGUI window.
+	 * If the user did not enter a name or profile picture, assign default values.
+	 * In addition, assign default profile pictures for all users in the Social Network.
+	 */
 	private class joinButtonListener implements ActionListener
 	{
 		public void actionPerformed(ActionEvent e)
@@ -159,20 +172,16 @@ public class WelcomeGUI extends JFrame
 					defaultUser.setName("Default User");
 				}
 				
-				// Add profile pictures for all of the Users in the social network.
+				// Get the default profile pictures for all users in the social network.
 				ImageIcon defaultPic = new ImageIcon(Image.class.getResource("/resources/Default_NetworkPic.jpg"));
 				Image img = defaultPic.getImage();
 				Image newImg = img.getScaledInstance(selectImage.getWidth(), selectImage.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon resizedDefaultPic = new ImageIcon(newImg);
+
+				
+				// Set the default profile picture for all users in the Social Network.
 				for (User currentUser : socialNetwork.getUsers())
 				{
-					currentUser.setProfilePicture(resizedDefaultPic);
-				}
-				
-				
-				for (User currentUser : socialNetwork.getUsers())
-				{
-					// If the user does not have an image, resize the DefaultPic and assign it to the User.
 					if (currentUser.getProfilePicture() == null)
 					{
 						currentUser.setProfilePicture(resizedDefaultPic);
@@ -203,6 +212,7 @@ public class WelcomeGUI extends JFrame
 	{
 		public void actionPerformed(ActionEvent e)
 		{
+			// Use JFileChooser to allow the user to choose a image file.
 			JFileChooser file = new JFileChooser();
 			file.setCurrentDirectory(new File(System.getProperty("user.home")));
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("jpg", "gif", "png");

@@ -1,21 +1,20 @@
 package SocialNetwork;
-import java.awt.image.BufferedImage;
+
 import java.util.ArrayList;
 import java.util.Objects;
-
 import javax.swing.ImageIcon;
 
-/*
- * This class is a represent's a user's profile.
+/**
+ * This class is a represent's a user's profile in a socialNetwork..
+ * @author Terry Hong
+ * @author Ralph Orteza
  */
-
 public class User 
 {
-	// Instance variables.
-	private ImageIcon picture;
-    private String name;
-    private Status status;
-    private ArrayList<User> friends;
+	private ImageIcon 		picture;	// To hold the User's profile picture.
+    private String 			name;		// To hold the User's name.
+    private Status 			status;		// To hold the User's status.
+    private ArrayList<User> friends;	// To hold the User's friend list.
     
     // Constructor that initializes new users with a name, status, and friends ArrayList.
     public User(String name, Status status)
