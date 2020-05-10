@@ -1,7 +1,11 @@
 package SocialNetwork;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 /*
  * This class creates an object of type Network and tests out the code.
@@ -159,7 +163,9 @@ public class MainDriver
 		
 		scan.close();
 		
-		WelcomeGUI test = new WelcomeGUI(n);
-		// NetworkGUI test = new NetworkGUI();
+
+		
+		User defaultUser = new User();
+		new WelcomeGUI(defaultUser, n);
 	}
 }

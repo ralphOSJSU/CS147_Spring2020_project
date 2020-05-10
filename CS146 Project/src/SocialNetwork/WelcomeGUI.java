@@ -18,10 +18,10 @@ public class WelcomeGUI extends JFrame
 	private JLabel selectImage;					// To hold display the user's image.
 	private ImageIcon userImage;				// To hold the user's image.
 	
-	public WelcomeGUI(Network socialNetwork)
+	public WelcomeGUI(User defaultUser, Network socialNetwork)
 	{
 		// Initialize defaultUser;
-		defaultUser = new User();
+		this.defaultUser = defaultUser;
 		
 		// Initialize the socialNetwork.
 		this.socialNetwork = socialNetwork;
@@ -125,14 +125,21 @@ public class WelcomeGUI extends JFrame
 			}
 			else
 			{
-				// Create a temporary Network to store the Network.
-				Network tempNetwork = socialNetwork;
+				// If the user did not choose an image, resize the DefaultPic and assign it to the User.
+				if (defaultUser.getProfilePicture() == null)
+				{
+					ImageIcon defaultPic = new ImageIcon(Image.class.getResource("/resources/DefaultPic.jpg"));
+					Image img = defaultPic.getImage();
+					Image newImg = img.getScaledInstance(selectImage.getWidth(), selectImage.getHeight(), Image.SCALE_SMOOTH);
+					ImageIcon resizedDefaultPic = new ImageIcon(newImg);
+					defaultUser.setProfilePicture(resizedDefaultPic);
+				}
 				
 				// Closes the window.
 				dispose();
 				
 				// Now go to the main network GUI.
-				new NetworkGUI(defaultUser, tempNetwork);
+				new NetworkGUI(defaultUser, socialNetwork);
 			}
 		}
 	}

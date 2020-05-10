@@ -128,6 +128,6 @@ public class User
     // Prints out the name and status of the user.
     public String toString()
     {
-    	return "The name of this user is: " + this.getName() + " and they are currently " + this.getStatus(); 
+    	return this.getName() + " Status: " + this.getStatus();
     }
 }

@@ -6,21 +6,35 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class NetworkGUI extends JFrame
 {
 	private Network socialNetwork;				// The Social Network.
 	private User defaultUser;					// The defaultUser's profile.
-	private final int WINDOW_WIDTH = 750;		// The width of the window.
+	private User currentNetworkUser;
+	private final int WINDOW_WIDTH = 900;		// The width of the window.
 	private final int WINDOW_HEIGHT = 600;		// The height of the window.
 	private JPanel userPanel;					// To hold the user's profile.
 	private JPanel networkPanel;				// To hold the network of Users.
-	private JPanel searchPanel;					// To hold the search bar.
+	private JPanel addFriendPanel;				// To hold the JList of friends.
+	private JPanel searchPanel;					// To hold the search bar.\
+	private JList addFriendList;
 	
 
+	// Search panel uses the search() method in network, using the string from JTextField.
+	
+	
 	// Constructor
 	public NetworkGUI(User defaultUser, Network socialNetwork)
 	{
@@ -40,18 +54,25 @@ public class NetworkGUI extends JFrame
 		// Add a BorderLayout manager to the content panel.
 		setLayout(new BorderLayout());
 		
+		// Set default profile pictures for all users in the Social Network.
+		setDefaultNetworkPic();
+		
 		// Build the JPanels.
 		buildUserPanel();
 		buildNetworkUserPanel();
 		buildSearchPanel();
+		buildAddFriendPanel();
 		
 		// Set the size of the panels.
 		userPanel.setPreferredSize(new Dimension(200, WINDOW_HEIGHT - 100));
 		
+		// Set the JScrollPane for the network.
+		JScrollPane scrollPane = new JScrollPane(networkPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		
 		// Add the JPanels to the network.
 		add(userPanel, BorderLayout.WEST);
-//		add(networkPanel, BorderLayout.EAST);
+		add(scrollPane, BorderLayout.CENTER);
+		add(addFriendPanel, BorderLayout.EAST);
 		add(searchPanel, BorderLayout.SOUTH);
 		
 		// Display the window.
@@ -59,6 +80,8 @@ public class NetworkGUI extends JFrame
 		setVisible(true);
 	}
 	
+	
+
 	private void buildUserPanel()
 	{
 		// Create 7 items: 5 JLabels, 2 buttons.
@@ -76,6 +99,11 @@ public class NetworkGUI extends JFrame
 		userName.setHorizontalAlignment(JLabel.CENTER);
 		userStatus.setHorizontalAlignment(JLabel.CENTER);
 		userFriends.setHorizontalAlignment(JLabel.CENTER);
+		
+		// Add Action Listeners to the modifyProfileBut and the leaveNetworkBut.
+		leaveNetworkBut.addActionListener(new leaveNetworkButListener());
+		modifyProfileBut.addActionListener(new modifyProfileButListener());
+		
 		
 		// Initialize the JPanel, and put all 7 items on it.
 		userPanel = new JPanel();
@@ -110,16 +138,11 @@ public class NetworkGUI extends JFrame
 		// Set the layout of the network JPanel.
 		networkPanel.setLayout(new GridLayout(socialNetwork.getUsers().size(), 1));
 		
-		JScrollPane scrollPane = new JScrollPane(networkPanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		add(scrollPane);
-		
-		
 		// Add each user in the network into the JPanel.
 		for (int i = 1; i < socialNetwork.getUsers().size(); i++)
 		{
 			networkPanel.add(buildNetworkUserPanel(socialNetwork.getUsers().get(i)));
 		}
-		
 	}
 	
 	private JPanel buildNetworkUserPanel(User networkUser)
@@ -128,8 +151,22 @@ public class NetworkGUI extends JFrame
 		JLabel userPicture = new JLabel(networkUser.getProfilePicture());
 		JLabel userName = new JLabel("Name: " + networkUser.getName());
 		JLabel userStatus = new JLabel("Status: " + networkUser.getStatus());
-		JLabel userFriends = new JLabel("Their Friends: (Can't show --> Private");
-		JButton addFriendBut = new JButton("+ Add Friend");
+		JLabel userFriends = new JLabel();
+		
+		if (defaultUser.getFriends().contains(networkUser))
+		{
+			userFriends.setText("Their Friends: " + networkUser.getFriends().get(0).getName() + " ");
+			for (int i = 1; i < networkUser.getFriends().size(); i++)
+			{
+				User currentUser = networkUser.getFriends().get(i);
+				userFriends.setText(userFriends.getText() + " --> " + currentUser.getName());
+			}
+		}
+		else
+		{
+			userFriends.setText("Their Friends: (Can't show --> Private");
+		}
+
 
 		// Initialize a sub JPanel, and add the 5 items to the sub JPanel.
 		JPanel userNetworkPanel = new JPanel();
@@ -154,14 +191,39 @@ public class NetworkGUI extends JFrame
 		userNetworkPanel.add(userFriends, c);
 		c.gridx = 2;
 		c.gridy = 1;
-        c.insets = new Insets(0, 10, 0, 10);
-		userNetworkPanel.add(addFriendBut, c);
+//        c.insets = new Insets(0, 10, 0, 10);
+//		userNetworkPanel.add(addFriendBut, c);
 
 		// Set the border for the sub JPanel.
 		userNetworkPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20)); 
 		
 		// Return the sub JPanel.
 		return userNetworkPanel;
+	}
+	
+	private void buildAddFriendPanel()
+	{
+		// Create a JButton to add a friend.
+		JButton addFriend = new JButton("+ Add Friend");
+		
+		// Initialize the JPanel.
+		addFriendPanel = new JPanel();
+		
+		addFriendPanel.setLayout(new BorderLayout());
+		
+		// Initialize the JList.
+		addFriendList = new JList(socialNetwork.getUsers().toArray());
+		
+		// Add a List Selection Listener.
+		addFriendList.addListSelectionListener(new ListListener());
+		addFriend.addActionListener(new addFriendButListener());
+		
+		// Set a custom space for each item in the list.
+		addFriendList.setFixedCellHeight(50);
+		
+		// Add the JList and JButtonto the JPanel.
+		addFriendPanel.add(addFriendList);
+		addFriendPanel.add(addFriend, BorderLayout.SOUTH);
 	}
 	
 	private void buildSearchPanel()
@@ -178,5 +240,72 @@ public class NetworkGUI extends JFrame
 		searchPanel.add(nameSearch);
 		searchPanel.add(textField);
 		searchPanel.add(searchBut);
+	}
+	
+	// Dont put this in a method. Becase it the lines multiple times.
+	private void setDefaultNetworkPic()
+	{
+		// Add profile pictures for all of the Users in the social network.
+		ImageIcon defaultPic = new ImageIcon(Image.class.getResource("/resources/Default_NetworkPic.jpg"));
+		Image img = defaultPic.getImage();
+		Image newImg = img.getScaledInstance(.getWidth(), .getHeight(), Image.SCALE_SMOOTH);
+		ImageIcon resizedDefaultPic = new ImageIcon(newImg);
+		for (User currentUser : socialNetwork.getUsers())
+		{
+			// If the user does not have an image, resize the DefaultPic and assign it to the User.
+			if (currentUser.getProfilePicture() == null)
+			{
+				currentUser.setProfilePicture(resizedDefaultPic);
+			}
+		}
+	}
+	
+	// Add the currentNetworkUser to the defaultUser's friend list, then reopen the GUI to update information.
+	private class addFriendButListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			defaultUser.addFriend(currentNetworkUser);
+			
+			// Closes the window.
+			dispose();
+			
+			// Restart the main network GUI with updated information.
+			new NetworkGUI(defaultUser, socialNetwork);
+			
+		}
+	}
+	
+	// Set the currentNetworkUser to the selected User in the network.
+	private class ListListener implements ListSelectionListener
+	{
+		public void valueChanged(ListSelectionEvent e)
+		{
+			currentNetworkUser = (User) addFriendList.getSelectedValue();
+		}
+	}
+	
+	// When the button is pressed, dispose of the window and terminate the program.
+	private class leaveNetworkButListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			// Closes the window.
+			dispose();
+			
+			// Terminates the program.
+			System.exit(ABORT);
+		}
+	}
+	
+	// When the button is pressed, go back to the welcome screen.
+	private class modifyProfileButListener implements ActionListener
+	{
+		public void actionPerformed(ActionEvent e)
+		{
+			dispose();
+			
+			new WelcomeGUI(defaultUser, socialNetwork);
+		}
 	}
 }
