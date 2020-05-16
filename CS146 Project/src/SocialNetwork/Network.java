@@ -1,8 +1,6 @@
 package SocialNetwork;
 
-import java.awt.image.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 // Social Network Project.
 // By Terry Hong and Ralph Orteza.

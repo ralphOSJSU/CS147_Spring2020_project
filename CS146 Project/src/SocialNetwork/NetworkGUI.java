@@ -128,6 +128,14 @@ public class NetworkGUI extends JFrame
 		// Set the layout of the network JPanel.
 		networkPanel.setLayout(new GridLayout(socialNetwork.getUsers().size(), 1));
 		
+		
+		/* 	
+		 	Adjacency List:
+			This is the outer for-loop that goes through every user
+		 	The method it calls has another for-loop that goes through the current user's arraylist of friends.
+		*/
+		
+		
 		// Add each user in the network into the JPanel.
 		for (int i = 0; i < socialNetwork.getUsers().size(); i++)
 		{
@@ -137,6 +145,8 @@ public class NetworkGUI extends JFrame
 			tempPanel.add(buildNetworkUserPanel(socialNetwork.getUsers().get(i)));
 			networkPanel.add(tempPanel);
 		}
+		
+		System.out.println("test");
 	}
 	
 	// Build a panel for the User input from the network, then add to the main networkPanel.
