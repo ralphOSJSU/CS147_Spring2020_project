@@ -27,7 +27,7 @@ public class NetworkGUI extends JFrame
 	// Constructor
 	public NetworkGUI(User defaultUser, Network socialNetwork)
 	{
-		// Initialize the socialNetwork.
+		// Initialize the socialNetwork and defaultUser.
 		this.defaultUser = defaultUser;
 		this.socialNetwork = socialNetwork;
 		
@@ -145,8 +145,6 @@ public class NetworkGUI extends JFrame
 			tempPanel.add(buildNetworkUserPanel(socialNetwork.getUsers().get(i)));
 			networkPanel.add(tempPanel);
 		}
-		
-		System.out.println("test");
 	}
 	
 	// Build a panel for the User input from the network, then add to the main networkPanel.
@@ -161,6 +159,7 @@ public class NetworkGUI extends JFrame
 		// If defaultUser is friends with the networkUser, display their friends. Otherwise, make it private.
 		if (defaultUser.getFriends().contains(networkUser))
 		{
+			// 2nd part of adjacency list. Goes through all the friends of the current user in the 1st for loop.
 			userFriends.setText("Their Friends: " + networkUser.getFriends().get(0).getName() + " ");
 			for (int i = 1; i < networkUser.getFriends().size(); i++)
 			{
@@ -252,6 +251,15 @@ public class NetworkGUI extends JFrame
 		searchPanel.add(searchBut);
 	}
 	
+	// Set the currentNetworkUser to the selected User in the network.
+	private class ListListener implements ListSelectionListener
+	{
+		public void valueChanged(ListSelectionEvent e)
+		{
+			currentNetworkUser = (User) addFriendList.getSelectedValue();
+		}
+	}
+	
 	// Add the currentNetworkUser to the defaultUser's friend list, then reopen the GUI to update information.
 	private class addFriendButListener implements ActionListener
 	{
@@ -265,16 +273,6 @@ public class NetworkGUI extends JFrame
 			
 			// Restart the main network GUI with updated information.
 			new NetworkGUI(defaultUser, socialNetwork);
-			
-		}
-	}
-	
-	// Set the currentNetworkUser to the selected User in the network.
-	private class ListListener implements ListSelectionListener
-	{
-		public void valueChanged(ListSelectionEvent e)
-		{
-			currentNetworkUser = (User) addFriendList.getSelectedValue();
 		}
 	}
 	
@@ -309,12 +307,12 @@ public class NetworkGUI extends JFrame
 	{
 		public void actionPerformed(ActionEvent e)
 		{
-			// 
-			String input = searchTextField.getText();
+			// Declare and initialize the variables.
+			String input = searchTextField.getText();	// Gets the string from the JTextField.
 			int index = 0;
 			boolean found = false;
 			
-			
+			// 
 			while (index < socialNetwork.getUsers().size() && !found)
 			{
 	            if(socialNetwork.getUsers().get(index).getName().equalsIgnoreCase(input))

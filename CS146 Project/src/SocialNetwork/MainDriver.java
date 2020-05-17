@@ -131,7 +131,7 @@ public class MainDriver
 		n.printUsers();
 		System.out.println();
 
-		// 21. Creates and prints the adjacency list.
+		// 21. Creates and prints the adjacency list of the social network.
 		System.out.println("(21) Printing adjacency list:");
 		ArrayList<ArrayList<User>> al = n.adjecencyList();
 
@@ -170,7 +170,10 @@ public class MainDriver
 //		n.addUser(new User("Tommy Vu", Status.Invisible));
 		
 		
+		// Create a default user for the GUI.
 		User defaultUser = new User();
+		
+		// Starts the GUI for the welcome screen.
 		new WelcomeGUI(defaultUser, n);
 	}
 }

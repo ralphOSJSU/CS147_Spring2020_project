@@ -62,7 +62,7 @@ public class WelcomeGUI extends JFrame
 		setVisible(true);
 	}
 
-	// Build the Title and namePanel at the top of the JFrame.
+	// Build the title and namePanel at the top of the JFrame.
 	private void buildNamePanel()
 	{
 		// Create 4 items: 3 JLabels and a JButton.
@@ -178,7 +178,6 @@ public class WelcomeGUI extends JFrame
 				Image newImg = img.getScaledInstance(selectImage.getWidth(), selectImage.getHeight(), Image.SCALE_SMOOTH);
 				ImageIcon resizedDefaultPic = new ImageIcon(newImg);
 
-				
 				// Set the default profile picture for all users in the Social Network.
 				for (User currentUser : socialNetwork.getUsers())
 				{
