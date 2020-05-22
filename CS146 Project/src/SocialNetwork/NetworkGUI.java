@@ -10,6 +10,7 @@ import javax.swing.event.*;
  * @author Terry Hong
  * @author Ralph Orteza
  */
+
 public class NetworkGUI extends JFrame
 {
 	private final int 	WINDOW_WIDTH = 1000;	// The width of the window.
@@ -24,7 +25,7 @@ public class NetworkGUI extends JFrame
 	private JList 		addFriendList;			// The JList for all Users in the Network.
 	private JTextField 	searchTextField;		// The search bar for the Users in the Network.
 	
-	// Constructor
+	// Constructor.
 	public NetworkGUI(User defaultUser, Network socialNetwork)
 	{
 		// Initialize the socialNetwork and defaultUser.
@@ -128,14 +129,6 @@ public class NetworkGUI extends JFrame
 		// Set the layout of the network JPanel.
 		networkPanel.setLayout(new GridLayout(socialNetwork.getUsers().size(), 1));
 		
-		
-		/* 	
-		 	Adjacency List:
-			This is the outer for-loop that goes through every user
-		 	The method it calls has another for-loop that goes through the current user's arraylist of friends.
-		*/
-		
-		
 		// Add each user in the network into the JPanel.
 		for (int i = 0; i < socialNetwork.getUsers().size(); i++)
 		{
@@ -150,7 +143,7 @@ public class NetworkGUI extends JFrame
 	// Build a panel for the User input from the network, then add to the main networkPanel.
 	private JPanel buildNetworkUserPanel(User networkUser)
 	{
-		// Create 5 items: 4 JLabels, 1 button.
+		// Create 4 JLabels.
 		JLabel userPicture = new JLabel(networkUser.getProfilePicture());
 		JLabel userName = new JLabel("Name: " + networkUser.getName());
 		JLabel userStatus = new JLabel("Status: " + networkUser.getStatus());
@@ -211,6 +204,7 @@ public class NetworkGUI extends JFrame
 		// Initialize the JPanel.
 		addFriendPanel = new JPanel();
 		
+		// Set the layout of the addFriendPanel.
 		addFriendPanel.setLayout(new BorderLayout());
 		
 		// Initialize the JList.
@@ -312,7 +306,7 @@ public class NetworkGUI extends JFrame
 			int index = 0;
 			boolean found = false;
 			
-			// 
+			// Search the entire socialNetwork until the name is found.
 			while (index < socialNetwork.getUsers().size() && !found)
 			{
 	            if(socialNetwork.getUsers().get(index).getName().equalsIgnoreCase(input))
@@ -322,7 +316,7 @@ public class NetworkGUI extends JFrame
 	            index++;
 			}
 			
-			// 
+			// Print the position number if found. Otherwise, print that the user is not in the network.
 	        if (found)
 	        	JOptionPane.showMessageDialog(null, "The user is at position " + index + ".");
 	        else

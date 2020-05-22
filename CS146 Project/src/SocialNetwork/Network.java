@@ -2,9 +2,11 @@ package SocialNetwork;
 
 import java.util.ArrayList;
 
-// Social Network Project.
-// By Terry Hong and Ralph Orteza.
-// Class that handles the network and the management of its users.
+/**
+ * Class that handles the network and the management of its users.
+ * @author Terry Hong
+ * @author Ralph Orteza
+ */
 
 public class Network 
 {
@@ -83,11 +85,16 @@ public class Network
     // Creates an adjacency list for the network using the users and their friends.
     public ArrayList<ArrayList<User>> adjecencyList()
     {			
+    	// Make an ArrayList that contains an ArrayList for each element.
         ArrayList<ArrayList<User>> list = new ArrayList<>();
+        
+        // Add the ArrayList of friends of each user in the network to the adjacency list.
         for(User user : users)
         {
             list.add(user.getFriends());
         }
+        
+        // Return the adjacency list.
         return list;
     }
 }

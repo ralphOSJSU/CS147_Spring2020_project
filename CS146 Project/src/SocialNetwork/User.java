@@ -9,6 +9,7 @@ import javax.swing.ImageIcon;
  * @author Terry Hong
  * @author Ralph Orteza
  */
+
 public class User 
 {
 	private ImageIcon 		picture;	// To hold the User's profile picture.

@@ -8,14 +8,13 @@ import java.util.Scanner;
  * @author Terry Hong
  * @author Ralph Orteza
  */
+
 public class MainDriver 
 {
 	// Main method to test the network and its users.
 	public static void main(String[] args) 
 	{
-		// Initialize a user input Scanner.
-		Scanner scan = new Scanner(System.in);
-
+		// Print the start of the test.
 		System.out.println("Testing network and user functions.");
 		System.out.println("\n");
 
@@ -135,10 +134,10 @@ public class MainDriver
 		System.out.println("(21) Printing adjacency list:");
 		ArrayList<ArrayList<User>> al = n.adjecencyList();
 
+		// Iterate for every User in the social network.
 		for (int i = 0; i < al.size(); i++) 
 		{
-			// This is because the class was split. Before, they were in the same class so it had visibility.
-			// Solved by adding a getUsers() method to it.
+			// Iterate for every friend of every User in the social network.
 			System.out.println(n.getUsers().get(i).getName() + "'s friends:");
 			ArrayList<User> friendGroup = al.get(i);
 			for (User u : friendGroup)
@@ -158,17 +157,24 @@ public class MainDriver
 			System.out.println(u.getName());
 		System.out.println();
 		
-		scan.close();
-		
-		
-//		n.addUser(new User("Jason Nguyen", Status.Invisible));
-//		n.addUser(new User("David Ho", Status.Invisible));
-//		n.addUser(new User("Jason Bourne", Status.Invisible));
-//		n.addUser(new User("Steven Dang", Status.Invisible));
-//		n.addUser(new User("Steven Vu", Status.Invisible));
-//		n.addUser(new User("Tommy Nguyen", Status.Invisible));
-//		n.addUser(new User("Tommy Vu", Status.Invisible));
-		
+		// Additional new Users to add for testing in the GUI only.
+		User jason = new User("Jason Bourne", Status.Online);
+		User steven = new User("Steven Dang", Status.Do_Not_Disturb);
+		User tommy = new User("Tommy Nguyen", Status.Away);
+		User anh = new User("Anh Nguyen", Status.Invisible);
+		User justin = new User("Justin Nhi", Status.Busy);
+		n.addUser(jason);
+		n.addUser(steven);
+		n.addUser(tommy);
+		n.addUser(anh);
+		n.addUser(justin);
+		n.addUser(jason);
+		steven.addFriend(tommy);
+		steven.addFriend(anh);
+		steven.addFriend(terry);
+		tommy.addFriend(terry);
+		terry.addFriend(anh);
+		justin.addFriend(terry);
 		
 		// Create a default user for the GUI.
 		User defaultUser = new User();

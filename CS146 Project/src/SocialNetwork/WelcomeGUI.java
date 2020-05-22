@@ -11,6 +11,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Terry Hong
  * @author Ralph Orteza
  */
+
 public class WelcomeGUI extends JFrame
 {
 	private final int 	WINDOW_WIDTH = 600;		// The width of the window.
@@ -152,6 +153,7 @@ public class WelcomeGUI extends JFrame
 		{
 			if (defaultUser.getName() == null)
 			{
+				// If the user never added a name, show a message dialog.
 				JOptionPane.showMessageDialog(null, "Please enter a name before entering.");
 			}
 			else
